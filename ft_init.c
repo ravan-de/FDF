@@ -42,9 +42,9 @@ void    ft_line_steep(int dx, int dy, void *param)
 void    ft_line(int dx, int dy, void *param)
 {
     t_mlx   *data;
-    int x;
-    int y;
-    int D;
+    int     x;
+    int     y;
+    int     D;
     
     data = (t_mlx *)param;
     x = 0;
@@ -103,10 +103,10 @@ void    ft_init(t_splitlst *lst)
     data.end = 0;
     data.con = mlx_init();
     data.wind = mlx_new_window(data.con, SIZE_X, SIZE_Y, "EPIC");
-    if (data.wind == NULL)
-        ft_putstr("NULL ALERT");
     data.img = mlx_new_image(data.con, SIZE_X, SIZE_Y);
     data.img_d = mlx_get_data_addr(data.img, (&data.bpp), (&data.line), (&data.end));
+    if (data.wind == NULL || data.img_d == NULL)
+        ft_putstr("NULL ALERT");
     printf("bpp: %i,  size_line: %i,  endian: %i\n", data.bpp, data.line, data.end);
     mlx_key_hook(data.wind, ft_key_pressed, &data);
     mlx_loop(data.con);
