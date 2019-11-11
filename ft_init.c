@@ -86,10 +86,28 @@ int    ft_key_pressed(int keycode, void *param)
     return (0);
 }
 
-int     ft_putimage(void *param)
+//only do this if perspective changes or on first launch
+int    ft_loop_grid(void *param)
 {
-    t_mlx   *data = (t_mlx *)param;
-    mlx_put_image_to_window(data->con, data->wind, data->img, 10, 10);
+    int         x;
+    t_mlx       *data = (t_mlx *)param;
+    t_splitlst  *lst = data->grid;
+
+    x = 0;
+    while (lst != NULL)
+    {
+        x = 0;
+        while (x < 19)
+        {
+            //ft_putnbr(lst->split[x]);
+            //ft_putchar(' ');
+            draw_line_right(lst->split[x], lst->split[x + 1]);
+            draw_line_down(lst->split[x], lst->next->split[x]);
+            x++;
+        }
+        //ft_putendl("");
+        lst = lst->next;
+    }
     return (0);
 }
 
@@ -98,16 +116,17 @@ void    ft_init(t_splitlst *lst)
     (void)lst;
     t_mlx   data;
 
-    data.bpp = 0;
-    data.line = 0;
-    data.end = 0;
     data.con = mlx_init();
     data.wind = mlx_new_window(data.con, SIZE_X, SIZE_Y, "EPIC");
-    data.img = mlx_new_image(data.con, SIZE_X, SIZE_Y);
-    data.img_d = mlx_get_data_addr(data.img, (&data.bpp), (&data.line), (&data.end));
-    if (data.wind == NULL || data.img_d == NULL)
-        ft_putstr("NULL ALERT");
-    printf("bpp: %i,  size_line: %i,  endian: %i\n", data.bpp, data.line, data.end);
+    data.grid = lst;
+    if (data.wind == NULL)
+        return ;
     mlx_key_hook(data.wind, ft_key_pressed, &data);
+    mlx_loop_hook(data.con, ft_loop_grid, &data);
     mlx_loop(data.con);
 }
+
+/* plan voor render(geld voor elk punt vanaf punt (0,0): 
+    1. maak lijn rechts(split[x + 1]) in 3d, projecteer deze naar window. 
+    2. maak lijn onder(lst->next.split[x]) in 3d, projecteer deze naar window.
+*/

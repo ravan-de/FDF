@@ -9,13 +9,9 @@ typedef struct          s_splitlst
 
 typedef struct  s_mlx
 {
+    t_splitlst  *grid;
     void        *con;
-    void        *wind;
-    void        *img;
-    char        *img_d;
-    int         bpp;
-    int         line;
-    int         end;         
+    void        *wind;        
 }               t_mlx;
 
 
