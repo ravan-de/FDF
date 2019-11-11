@@ -97,12 +97,14 @@ int    ft_loop_grid(void *param)
     while (lst != NULL)
     {
         x = 0;
-        while (x < 19)
+        while (x < lst->size)
         {
             //ft_putnbr(lst->split[x]);
             //ft_putchar(' ');
-            draw_line_right(lst->split[x], lst->split[x + 1]);
-            draw_line_down(lst->split[x], lst->next->split[x]);
+            if (x + 1 < lst->size)
+                ft_putstr("dikke");//draw_line_right(lst->split[x], lst->split[x + 1]);
+            if (lst->next != NULL && x < lst->next->size)
+                ft_putstr("test");//draw_line_down(lst->split[x], lst->next->split[x]);
             x++;
         }
         //ft_putendl("");

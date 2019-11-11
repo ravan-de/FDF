@@ -4,16 +4,17 @@
 #include "libft.h"
 #include "get_next_line.h"
 
-int             *strarr_intarr(char **strsplit)
+t_splitlst      *strarr_intarr(char **strsplit)
 {
-    int i;
-    int *split;
+    int     i;
+    int     *split;
+    short   size;
 
     i = 0;
     while (strsplit[i] != NULL)
         i++;
     split = ft_memalloc(sizeof(int) * i); 
-    split[i] = __INT_MAX__;
+    size = i;
     while (i > 0)
     {
         split[i - 1] = ft_atoi(strsplit[i - 1]);
@@ -21,7 +22,7 @@ int             *strarr_intarr(char **strsplit)
         i--;
     }
     free(strsplit);
-    return (split);
+    return (ft_splitnew(split, size));
 }
 
 t_splitlst      *read_data(int fd)
@@ -41,11 +42,11 @@ t_splitlst      *read_data(int fd)
         split = ft_strsplit(str, ' ');
         if (y == 0)
         {
-            start = ft_splitnew(strarr_intarr(split));
+            start = strarr_intarr(split);
             end = start;
         }
         else
-            end = ft_splitadd(ft_splitnew(strarr_intarr(split)), end);
+            end = ft_splitadd(strarr_intarr(split), end);
         y++;
     }
     return (start);
@@ -58,7 +59,7 @@ void    ft_printlst(t_splitlst *start)
     while (start != NULL)
     {
         x = 0;
-        while (start->split[x] != __INT_MAX__)
+        while (x < start->size)
         {
             ft_putnbr(start->split[x]);
             if (start->split[x] >= 10)
