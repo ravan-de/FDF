@@ -12,11 +12,11 @@
 
 NAME = test
 
-LIB = libft/libft.a libft/libmlx.a
+LIB = libft/libftprintf.a libft/libmlx.a
 
 INCL = libft/includes
 
-OBJ = ft_splitnew.o ft_splitadd.o read_data.o ft_init.o
+OBJ = ft_splitnew.o ft_splitadd.o read_data.o ft_init.o matrix_calc.o draw.o
 
 all: $(NAME)
 

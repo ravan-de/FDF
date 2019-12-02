@@ -94,6 +94,6 @@ int					ft_isspace(int c);
 char				ft_toupper(char c);
 int					ft_tolower(int c);
 void				ft_strcaps(char **str);
-int					get_next_line(const int fd, char **line);
+void    			ft_swap(int *one, int *two);
 
 #endif

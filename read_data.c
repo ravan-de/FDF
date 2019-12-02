@@ -52,27 +52,6 @@ t_splitlst      *read_data(int fd)
     return (start);
 }
 
-void    ft_printlst(t_splitlst *start)
-{
-    int     x;
-
-    while (start != NULL)
-    {
-        x = 0;
-        while (x < start->size)
-        {
-            ft_putnbr(start->split[x]);
-            if (start->split[x] >= 10)
-                ft_putstr(" ");
-            else
-                ft_putstr("  ");
-            x++;            
-        }
-        ft_putendl("");
-        start = start->next;
-    }
-}
-
 int main(int argc, char **argv)
 {
     t_splitlst *lst;
@@ -81,7 +60,6 @@ int main(int argc, char **argv)
     if (argc == 2)
     {
         lst = read_data(open(argv[1], O_RDONLY));
-        ft_printlst(lst);
         ft_init(lst);
     }
     return (0);

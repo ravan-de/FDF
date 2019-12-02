@@ -10,9 +10,12 @@
 #                                                                              #
 #******************************************************************************#
 
-NAME = libft.a
+NAME = libftprintf.a
 
-OBJ = get_next_line.o ft_str_resize.o ft_utoa.o ft_atou.o \
+OBJ = ft_printf.o conv_int.o conv_uns.o ft_convbase.o print.o ft_get_double.o \
+	flag_getters.o apply_mods.o process_flags.o ft_get_ldouble.o
+
+LIBFTOBJ = ft_str_resize.o ft_strsum.o ft_atou.o ft_utoa.o \
 	ft_memrcpy.o ft_lst_append.o ft_lstmap.o ft_lstdelone.o ft_lstdel.o \
 	ft_lstadd.o ft_lstiter.o ft_lstnew.o ft_putendl.o ft_putchar_fd.o \
 	ft_putstr_fd.o ft_putendl_fd.o ft_putnbr_fd.o ft_itoa.o ft_strsplit.o\
@@ -25,15 +28,23 @@ OBJ = get_next_line.o ft_str_resize.o ft_utoa.o ft_atou.o \
 	ft_strnstr.o ft_strcmp.o ft_strncmp.o ft_isalpha.o ft_isdigit.o \
 	ft_isalnum.o ft_isascii.o ft_isprint.o ft_toupper.o ft_tolower.o \
 	ft_isupper.o ft_islower.o ft_putchar.o ft_power.o ft_strcaps.o \
-	ft_strsum.o ft_strprod.o ft_strpower.o
+	ft_str_rev.o get_next_line.o ft_swap.o
+
+INCL = includes
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
-	ar rc $(NAME) $(OBJ)
+$(NAME): $(OBJ) $(LIBFTOBJ)
+	ar rc $(NAME) $(OBJ) $(LIBFTOBJ)
+
+%.o: printf/%.c
+	gcc -c -Wall -Wextra -Werror -o $@ $^ -I $(INCL)
 
 %.o: %.c
-	gcc -c -I includes -Wall -Wextra -Werror $<
+	gcc -Wall -Wextra -Werror -c -o $@ $^ -I $(INCL)
+
+test: $(NAME) main.c
+	gcc -o $@ -Wall -Wextra -Werror main.c $(NAME) -I $(INCL)
 
 clean:
 	rm -f *.o
